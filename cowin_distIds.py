@@ -16,7 +16,9 @@ def get_districtId(stateId):
     headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:89.0) Gecko/20100101 Firefox/89.0"}
     resp = requests.get(url, params="", headers=headers) 
     data = resp.json()
-    return [session for session in get_sessions(data)]
+    information = [session for session in get_sessions(data)]
+    resp.close()
+    return information
 
 def create_output(session_info):
     return f"{session_info['district_id']} - {session_info['district_name']}"
