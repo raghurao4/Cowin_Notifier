@@ -37,7 +37,7 @@ def create_output(session_info):
     return f"{session_info['date']} - {session_info['name']} - {session_info['age_limit']} - {session_info['capacity']} - {session_info['capacity1']} - {session_info['capacity2']}"
 
 #"Date - Center - AgeLimit - TotalCapacity - 1stDoseCapacity - 2ndDoseCapacity"
-def cowin_pincodecheck(check):
+def cowin_pincodecheck(check, notifierType):
     #print(check.items())
     for q_id, q_info in check.items():
         #if int(q_id) == iter:
@@ -49,7 +49,7 @@ def cowin_pincodecheck(check):
         sendtoname = check['sname']
     
     #password hidden
-    print("\n\nGot Pincode check values .. " + iPin + ", " + iageLimit + ", " +  iDose  + ", " + username + ", " +  "*pwd_not_print*" + ", " + sendtoname + "\n\n" )
+    print("\n\nGot Pincode check values .. " + iPin + ", " + iageLimit + ", " +  iDose  + ", " + username + ", " +  password[0:-1] + "*, " + sendtoname + "\n\n" )
 
     print(get_for_seven_days(datetime.today(), iPin, iageLimit, iDose))
     content = "\n".join([create_output(session_info) for session_info in get_for_seven_days(datetime.today(), iPin, iageLimit, iDose)])
@@ -57,8 +57,11 @@ def cowin_pincodecheck(check):
     if not content:
         print("\nPincode, Age, iDose - " + iPin + ", " + iageLimit + ', ' + iDose + "# No availability found!")
     else:
-        sub = "Vaccination Slot By Pincode Open"
-        cowin_utility.sendMail(username, password, sendtoname, sub, content)
+        if notifierType != 1:
+            sub = "Vaccination Slot By Pincode Open"
+            cowin_utility.sendMail(username, password, sendtoname, sub, content)
+        else:
+            cowin_utility.CowinNotifier(content)
 
 #if __name__ == "__main__":
 #    print("nothing to do")

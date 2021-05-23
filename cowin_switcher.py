@@ -11,6 +11,7 @@ import cowin_query_pin
 import cowin_utility
 
 breakTime = 60  #sec
+notifierType = 0 #0 - Mail, 1 - Desktop
 #294 - Bengaluru, BBMP
 #560048 - Bengaluru, Mahadevapura
 cowin_dict = {1: {'distorpin': 'p', 'dist': '294', 'age': '45', 'dose': '1', 'pin': '560048', 'uname': 'dummy', 'pwd': 'abc', 'sname': 'xyz'}}
@@ -41,8 +42,8 @@ def getUserInputs(distorpin):
     cowin_dict[i]['age'] = ''
     cowin_dict[i]['dose'] = ''
     cowin_dict[i]['uname'] = 'dummy'
-    cowin_dict[i]['pwd'] = ''
-    cowin_dict[i]['sname'] = ''
+    cowin_dict[i]['pwd'] = 'abc'
+    cowin_dict[i]['sname'] = 'xyz'
 
     if distorpin == 'd':      
         val = input ("\nPlease enter your district id: ")
@@ -86,21 +87,22 @@ def getUserInputs(distorpin):
         print("\nOnly integers 1/2 are allowed as input for dose number")
         return backToMainMenu(i, 'int')
 
-    if i > 1:
-        val = input ("\nDo you want to resue notification <from,pwd,sendto> inputs for this query: y/n?")
-        try:
-            if val == 'y':
-                cowin_dict[i]['uname'] = cowin_dict[i-1]['uname']
-                cowin_dict[i]['pwd'] = cowin_dict[i-1]['pwd']
-                cowin_dict[i]['sname'] = cowin_dict[i-1]['sname']
-            elif val == 'n':
-                getNoticeInputs(i)
-        except ValueError:
-            print("\nOnly y/n are allowed as input for notice info reuse")
-            return backToMainMenu(i, 'str')
-                    
-    else:
-        getNoticeInputs(i)
+    if notifierType != 1: #is not desktop
+        if i > 1:
+            val = input ("\nDo you want to resue notification <from,pwd,sendto> inputs for this query: y/n?")
+            try:
+                if val == 'y':
+                    cowin_dict[i]['uname'] = cowin_dict[i-1]['uname']
+                    cowin_dict[i]['pwd'] = cowin_dict[i-1]['pwd']
+                    cowin_dict[i]['sname'] = cowin_dict[i-1]['sname']
+                elif val == 'n':
+                    getNoticeInputs(i)
+            except ValueError:
+                print("\nOnly y/n are allowed as input for notice info reuse")
+                return backToMainMenu(i, 'str')
+                        
+        else:
+            getNoticeInputs(i)
     #print (cowin_dict)
 
 def getNoticeInputs(i):
@@ -129,6 +131,21 @@ class Switcher(object):
     #quit
     def number_q(self):
         return 'Quitting ..'
+    #notifier type
+    def number_0(self):
+        global notifierType
+        print (cowin_utility.colored(0, 255, 255, "\nCurrent notifier type < 0-Mail, 1-Desktop > is: " + str(notifierType)))
+        val = input("\nPlease enter desired notifier type: ")
+        try:
+            if int(val) == 0 or int(val) == 1:
+                print (cowin_utility.colored(0, 255, 255, "\nChanging notifier type < 0-Mail, 1-Desktop > from: " + str(notifierType)))
+                notifierType = int(val)
+                print (cowin_utility.colored(0, 255, 255, "\nChanged notifier type < 0-Mail, 1-Desktop > to: " + str(notifierType)))
+            else:
+                raise ValueError
+        except ValueError:
+            print("\nOnly 0/1 are allowed as input for notifier type")
+            print(cowin_utility.colored(0, 255, 0, "\n\nInvalid literal for int() exception caught, Pls retry ..\n\n"))
     #get state id list
     def number_1(self):
         return cowin_stateId.getStateId()
@@ -139,7 +156,7 @@ class Switcher(object):
             if int(my_state) in range(1, 37):
                 return cowin_distIds.getDistrictId(my_state)
             else:
-                return 'get district id list failed!'
+                return '\nget district id list failed!'
         except ValueError:
             print("\nOnly integers are allowed as input for state id")
             print(cowin_utility.colored(0, 255, 0, "\n\nInvalid literal for int() exception caught, Pls retry ..\n\n"))
@@ -196,6 +213,7 @@ class Switcher(object):
     #run cowin query
     def number_7(self):
         print (cowin_utility.colored(0, 255, 255, "\nRun created cowin query,\n"))
+        print (cowin_utility.colored(0, 255, 255, "\nCurrent notifier type < 0-Mail, 1-Desktop > is: " + str(notifierType)))
         #print (cowin_dict.items())
         iteration = 0
         contLoop = True
@@ -203,7 +221,7 @@ class Switcher(object):
             for q_id, q_info in cowin_dict.items():
                 iteration = iteration + 1
                 print("\n\nIteration >> " + str(iteration))
-                if q_info['uname'] == 'dummy':
+                if q_info['uname'] == 'dummy' and notifierType == 0:
                     print (cowin_utility.colored(255, 0, 0, "\nInvalid notice entry, pls create query and try again..\n"))
                     contLoop = False
                     break
@@ -239,13 +257,14 @@ def executeDistPinQuery(i):
     for q_id, q_info in cowin_dict.items():
         if int(q_id) == i:
             if q_info['distorpin'] == 'd':
-                cowin_query_distId.cowin_distidcheck(cowin_dict[i])
+                cowin_query_distId.cowin_distidcheck(cowin_dict[i], notifierType)
             elif q_info['distorpin'] == 'p':
-                cowin_query_pin.cowin_pincodecheck(cowin_dict[i])
+                cowin_query_pin.cowin_pincodecheck(cowin_dict[i], notifierType)
             
 #if __name__ == "__main__":
 #    s=Switcher()
+#    s.indirect(0)
 #    s.indirect(5)
 #    s.indirect(4)
 #    s.indirect(3)
-#    s.indirect(7)s
+#    s.indirect(7)

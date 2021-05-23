@@ -15,7 +15,8 @@ def main():
     choice = ''
 
     while choice != 'q':
-        print(cowin_utility.colored(0, 0, 255, "\n[1] Enter 1 to get state id list."))
+        print(cowin_utility.colored(0, 0, 255, "\n[0] Enter 0 to set preference to Mail or Desktop notification."))
+        print(cowin_utility.colored(0, 0, 255, "[1] Enter 1 to get state id list."))
         print(cowin_utility.colored(0, 0, 255, "[2] Enter 2 to get district id list."))
         print(cowin_utility.colored(0, 0, 255, "[3] Enter 3 to create cowin query by dist id."))
         print(cowin_utility.colored(0, 0, 255, "[4] Enter 4 to create cowin query by pincode."))

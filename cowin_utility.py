@@ -3,6 +3,7 @@
 import re
 import email
 import smtplib
+from win10toast import ToastNotifier
 
 def colored(r, g, b, text):
     #return "\033[38;2;{};{};{}m{} \033[38;2;255;255;255m".format(r, g, b, text)
@@ -40,6 +41,10 @@ def sendMail(username, password, sendtoname, sub, content):
         except smtplib.SMTPAuthenticationError:
             print(colored(255, 0, 0, "\nMail not sent, Username or Password not accepted. Pls fill valid entries.."))
     print("\n\n" + content ) 
+
+def CowinNotifier(content):
+    toaster = ToastNotifier()
+    toaster.show_toast("CoWin Notifier", content)
 
 #if __name__ == "__main__":
 #    print("nothing to do")

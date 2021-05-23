@@ -40,7 +40,7 @@ def create_output(session_info):
     return f"{session_info['date']} - {session_info['name']} - {session_info['age_limit']} - {session_info['capacity']} - {session_info['capacity1']} - {session_info['capacity2']}"
 
 #"Date - Center - AgeLimit - TotalCapacity - 1stDoseCapacity - 2ndDoseCapacity"
-def cowin_distidcheck(check):
+def cowin_distidcheck(check, notifierType):
     #print(check.items())
     for q_id, q_info in check.items():
         #if int(q_id) == iter:
@@ -52,16 +52,19 @@ def cowin_distidcheck(check):
         sendtoname = check['sname']
     
     #password hidden
-    print("\n\nGot District check values .. " + iDistId + ", " + iageLimit + ", " +  iDose  + ", " + username + ", " +  "*pwd_not_print*" + ", " + sendtoname + "\n\n" )
+    print("\n\nGot District check values .. " + iDistId + ", " + iageLimit + ", " +  iDose  + ", " + username + ", " + password[0:-1] + "*, " + sendtoname + "\n\n" )
 
     print(get_for_seven_days(datetime.today(), iDistId, iageLimit, iDose))
     content = "\n".join([create_output(session_info) for session_info in get_for_seven_days(datetime.today(), iDistId, iageLimit, iDose)])
     
     if not content:
-        print("\nDistId " + iDistId + "# No availability found!")
+        print("\nDistId, Age, iDose - " + iDistId + ", " + iageLimit + ', ' + iDose + "# No availability found!")
     else:
         sub = "Vaccination Slot By DistId Open"
-        cowin_utility.sendMail(username, password, sendtoname, sub, content)
+        if notifierType != 1:
+            cowin_utility.sendMail(username, password, sendtoname, sub, content)
+        else:
+            cowin_utility.CowinNotifier(content)
 
 #if __name__ == "__main__":
 #    print("nothing to do")
