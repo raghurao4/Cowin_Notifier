@@ -216,24 +216,30 @@ class Switcher(object):
     def number_7(self):
         print (cowin_utility.colored(0, 255, 255, "\nRun created cowin query,\n"))
         print (cowin_utility.colored(0, 255, 255, "\nCurrent notifier type < 0-Mail, 1-Desktop > is: " + str(notifierType)))
-        #print (cowin_dict.items())
-        iteration = 0
-        contLoop = True
-        while contLoop != False:
-            for q_id, q_info in cowin_dict.items():
-                iteration = iteration + 1
-                print("\n\nIteration >> " + str(iteration))
-                if q_info['uname'] == 'dummy' and notifierType == 0:
-                    print (cowin_utility.colored(255, 0, 0, "\nInvalid notice entry, pls create query and try again..\n"))
-                    contLoop = False
-                    break
-                else:
-                    if int(q_id) > 1:
-                        executeDistPinQuery(int(q_id))
+        
+        self.number_5()
+
+        if (input("\n\nDo you want to contune, y/n?: ") == 'y'):
+            #print (cowin_dict.items())
+            iteration = 0
+            contLoop = True
+            while contLoop != False:
+                for q_id, q_info in cowin_dict.items():
+                    iteration = iteration + 1
+                    print("\n\nIteration >> " + str(iteration))
+                    if q_info['uname'] == 'dummy' and notifierType == 0:
+                        print (cowin_utility.colored(255, 0, 0, "\nInvalid notice entry, pls create query and try again..\n"))
+                        contLoop = False
+                        break
                     else:
-                        executeDistPinQuery(int(q_id))
-                print (cowin_utility.colored(0, 255, 255, "\n" + str(breakTime) + " sec sleep before next query,\n"))
-                time.sleep(breakTime)
+                        if int(q_id) > 1:
+                            executeDistPinQuery(int(q_id))
+                        else:
+                            executeDistPinQuery(int(q_id))
+                    print (cowin_utility.colored(0, 255, 255, "\n" + str(breakTime) + " sec sleep before next query,\n"))
+                    time.sleep(breakTime)
+        else:
+            print("\nBack to Main Menu!")
 
     #update sleep time
     def number_8(self):
