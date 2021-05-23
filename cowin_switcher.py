@@ -28,7 +28,7 @@ def getUserInputs(distorpin):
     i = 0
     for q_id, q_info in cowin_dict.items():
         i = int(q_id)
-        if q_info['uname'] == 'dummy':
+        if q_info['uname'] == 'dummy' and notifierType != 1:
             break
         else:
             i = i+1
@@ -87,6 +87,7 @@ def getUserInputs(distorpin):
         print("\nOnly integers 1/2 are allowed as input for dose number")
         return backToMainMenu(i, 'int')
 
+    print (cowin_utility.colored(0, 255, 255, "\nChecking notifier type < 0-Mail, 1-Desktop > is: " + str(notifierType)))
     if notifierType != 1: #is not desktop
         if i > 1:
             val = input ("\nDo you want to resue notification <from,pwd,sendto> inputs for this query: y/n?")
@@ -100,7 +101,6 @@ def getUserInputs(distorpin):
             except ValueError:
                 print("\nOnly y/n are allowed as input for notice info reuse")
                 return backToMainMenu(i, 'str')
-                        
         else:
             getNoticeInputs(i)
     #print (cowin_dict)
@@ -138,7 +138,7 @@ class Switcher(object):
         val = input("\nPlease enter desired notifier type: ")
         try:
             if int(val) == 0 or int(val) == 1:
-                print (cowin_utility.colored(0, 255, 255, "\nChanging notifier type < 0-Mail, 1-Desktop > from: " + str(notifierType)))
+                #print (cowin_utility.colored(0, 255, 255, "\nChanging notifier type < 0-Mail, 1-Desktop > from: " + str(notifierType)))
                 notifierType = int(val)
                 print (cowin_utility.colored(0, 255, 255, "\nChanged notifier type < 0-Mail, 1-Desktop > to: " + str(notifierType)))
             else:
@@ -186,14 +186,16 @@ class Switcher(object):
     def number_6(self):
         print (cowin_utility.colored(0, 255, 255, "\nCurrent query list as below,\n"))
         #print(cowin_dict.items())
+        i = 0
         for q_id, q_info in cowin_dict.items():
             print("\nQuery ID: ", q_id)
+            i = i + 1
             for key in q_info:
                 print(key + ': ', q_info[key])
                 
         val = input("\n\nPlease select the query id to delete: ")
         try:
-            if int(val) == 1:
+            if int(val) == 1 and i == 1:
                 #back to default value
                 cowin_dict[1]['distorpin'] = 'd'
                 cowin_dict[1]['dist'] = '294'
@@ -266,5 +268,6 @@ def executeDistPinQuery(i):
 #    s.indirect(0)
 #    s.indirect(5)
 #    s.indirect(4)
-#    s.indirect(3)
+#    s.indirect(6)
+#    s.indirect(5)
 #    s.indirect(7)
