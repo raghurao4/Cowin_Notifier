@@ -1,10 +1,7 @@
 - 👋 Hi, I’m @raghurao4
 - 👀 I’m interested in open-source projects to learn and contribute ...
-- 🌱 I’m currently learning everything that comes my way which I do not know much about ...
-- 💞️ I’m looking to collaborate on python ...
+- 🌱 raghurao4/Cowin_Notifier is a ✨ special ✨ repository, the desktop application allows to create multiple query for your needs regarding vaccination slot search. 
+- You can choose for mail or desktop notification, by default it is set to desktop notification.
+- Change the sleep time between your query to the server < default setting is 60sec >, currently allowed filter is upto age limit and dose level. If demand arise, I will update the vaccince type as well to include in the search query.
+- Hope, this helps fellow Indians and friends to find and book your slot!
 - 📫 How to reach me, well drop an email at raghurao4@gmail.com ...
-
-<!---
-raghurao4/raghurao4 is a ✨ special ✨ repository because its `README.md` (this file) appears on your GitHub profile.
-You can click the Preview link to take a look at your changes.
---->
