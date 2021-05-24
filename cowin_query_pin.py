@@ -62,6 +62,7 @@ def cowin_pincodecheck(check, notifierType):
             cowin_utility.sendMail(username, password, sendtoname, sub, content)
         else:
             cowin_utility.CowinNotifier(content)
+    return 'Exiting Pin Code check ..'
 
 #if __name__ == "__main__":
 #    print("nothing to do")

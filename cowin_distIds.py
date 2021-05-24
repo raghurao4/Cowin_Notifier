@@ -30,6 +30,7 @@ def getDistrictId(stateid):
         print("\n\nChosen State, District List as below: \n\n")
         print(content)
         print("\n")
+    return '\nExiting dist Id list..'
 
 #if __name__ == "__main__":
 #    print("nothing to do")

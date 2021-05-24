@@ -65,6 +65,7 @@ def cowin_distidcheck(check, notifierType):
             cowin_utility.sendMail(username, password, sendtoname, sub, content)
         else:
             cowin_utility.CowinNotifier(content)
+    return 'Exiting Dist Id check ..'
 
 #if __name__ == "__main__":
 #    print("nothing to do")

@@ -31,6 +31,7 @@ def getStateId():
         print("\n\nState List as below: \n\n")
         print(content)
         print("\n")
+    return '\nExiting State Id list ..'
 
 #if __name__ == "__main__":
 #    print("nothing to do")

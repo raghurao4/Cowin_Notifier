@@ -9,7 +9,7 @@ import cowin_query_pin
 import cowin_utility
 
 breakTime = 60  #sec
-notifierType = 0 #0 - Mail, 1 - Desktop
+notifierType = 1 #0 - Mail, 1 - Desktop
 #294 - Bengaluru, BBMP
 #560048 - Bengaluru, Mahadevapura
 cowin_dict = {1: {'distorpin': 'p', 'dist': '294', 'age': '45', 'dose': '1', 'pin': '560048', 'uname': 'dummy', 'pwd': 'abc', 'sname': 'xyz'}}
@@ -128,7 +128,7 @@ class Switcher(object):
         return method()
     #quit
     def number_q(self):
-        return 'Quitting ..'
+        return '\nQuitting ..'
     #notifier type
     def number_0(self):
         global notifierType
@@ -144,7 +144,7 @@ class Switcher(object):
         except ValueError:
             print("\nOnly 0/1 are allowed as input for notifier type")
             print(cowin_utility.colored(0, 255, 0, "\n\nInvalid literal for int() exception caught, Pls retry ..\n\n"))
-        return 'Exiting change notifier ..'
+        return '\nExiting change notifier ..'
 
     #get state id list
     def number_1(self):
@@ -160,17 +160,17 @@ class Switcher(object):
         except ValueError:
             print("\nOnly integers are allowed as input for state id")
             print(cowin_utility.colored(0, 255, 0, "\n\nInvalid literal for int() exception caught, Pls retry ..\n\n"))
-        return 'Exiting get district id ..'
+        return '\nExiting get district id ..'
     #user input for cowin query by dist id
     def number_3(self):
         print (cowin_utility.colored(0, 255, 255, "\nCreate cowin query by dist id,\n"))
         getUserInputs('d')
-        return 'Exiting dist id query ..'
+        return '\nExiting dist id - create query ..'
     #user input for cowin query by pincode
     def number_4(self):
         print (cowin_utility.colored(0, 255, 255, "\nCreate cowin query by pincode,\n"))
         getUserInputs('p')
-        return 'Exiting pincode query ..'
+        return '\nExiting pincode - create query ..'
     #current query list
     def number_5(self):
         print (cowin_utility.colored(0, 255, 255, "\nCurrent query list as below,\n"))
@@ -182,7 +182,7 @@ class Switcher(object):
                     print(key + ': ', (q_info[key])[0:-1] + '*')
                 else:
                     print(key + ': ', q_info[key])
-        return 'Exiting print query list..'
+        return '\nExiting print query list..'
     #delete query
     def number_6(self):
         print (cowin_utility.colored(0, 255, 255, "\nCurrent query list as below,\n"))
@@ -194,7 +194,7 @@ class Switcher(object):
             for key in q_info:
                 print(key + ': ', q_info[key])
                 
-        val = input("\n\nPlease select the query id to delete: ")
+        val = input("\n\nPlease select the query id to delete, or any letter to quit delete: ")
         try:
             if int(val) == 1 and i == 1:
                 #back to default value
@@ -211,7 +211,7 @@ class Switcher(object):
         except ValueError:
             print("\nOnly integer are allowed as input for delete query id")
             print(cowin_utility.colored(0, 255, 0, "\n\nInvalid literal for int() exception caught, Pls retry ..\n\n"))
-        return 'Exiting delete query list..'
+        return '\nExiting delete query list..'
 
     #run cowin query
     def number_7(self):
@@ -241,7 +241,7 @@ class Switcher(object):
                     time.sleep(breakTime)
         else:
             print("\nBack to Main Menu!")
-        return 'Exiting run query list..'
+        return '\nExiting run query list..'
 
     #update sleep time
     def number_8(self):
@@ -257,7 +257,7 @@ class Switcher(object):
         except ValueError:
             print("\nOnly integer are allowed as input for sleep time in seconds, min 30sec")
             print(cowin_utility.colored(0, 255, 0, "\n\nInvalid literal for int() exception caught, Pls retry ..\n\n"))
-        return 'Exiting update sleep time..'
+        return '\nExiting update sleep time..'
 
     #info on gmail less secure apps access
     def number_9(self):
