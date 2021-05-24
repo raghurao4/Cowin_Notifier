@@ -1,6 +1,5 @@
 #!/usr/bin/python
 
-from datetime import datetime
 import requests
 
 def create_session_info(session):
@@ -14,7 +13,7 @@ def get_sessions(data):
 def get_districtId(stateId):
     url = "https://cdn-api.co-vin.in/api/v2/admin/location/districts/" + str(stateId)
     headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:89.0) Gecko/20100101 Firefox/89.0"}
-    resp = requests.get(url, params="", headers=headers) 
+    resp = requests.get(url, params="", headers=headers, timeout=5)
     data = resp.json()
     information = [session for session in get_sessions(data)]
     resp.close()

@@ -1,7 +1,5 @@
 #!/usr/bin/python
 
-import sys
-import re
 import time
 import getpass
 import cowin_stateId
@@ -126,7 +124,7 @@ def getNoticeInputs(i):
 class Switcher(object):
     def indirect(self,i):
         method_name='number_'+str(i)
-        method=getattr(self,method_name,lambda :'\nInvalid Entry, pls retry!')
+        method=getattr(self, method_name, lambda :'\nInvalid Entry, pls retry!')
         return method()
     #quit
     def number_q(self):
@@ -146,6 +144,8 @@ class Switcher(object):
         except ValueError:
             print("\nOnly 0/1 are allowed as input for notifier type")
             print(cowin_utility.colored(0, 255, 0, "\n\nInvalid literal for int() exception caught, Pls retry ..\n\n"))
+        return 'Exiting change notifier ..'
+
     #get state id list
     def number_1(self):
         return cowin_stateId.getStateId()
@@ -160,16 +160,17 @@ class Switcher(object):
         except ValueError:
             print("\nOnly integers are allowed as input for state id")
             print(cowin_utility.colored(0, 255, 0, "\n\nInvalid literal for int() exception caught, Pls retry ..\n\n"))
+        return 'Exiting get district id ..'
     #user input for cowin query by dist id
     def number_3(self):
         print (cowin_utility.colored(0, 255, 255, "\nCreate cowin query by dist id,\n"))
         getUserInputs('d')
-
+        return 'Exiting dist id query ..'
     #user input for cowin query by pincode
     def number_4(self):
         print (cowin_utility.colored(0, 255, 255, "\nCreate cowin query by pincode,\n"))
         getUserInputs('p')
-
+        return 'Exiting pincode query ..'
     #current query list
     def number_5(self):
         print (cowin_utility.colored(0, 255, 255, "\nCurrent query list as below,\n"))
@@ -181,7 +182,7 @@ class Switcher(object):
                     print(key + ': ', (q_info[key])[0:-1] + '*')
                 else:
                     print(key + ': ', q_info[key])
-
+        return 'Exiting print query list..'
     #delete query
     def number_6(self):
         print (cowin_utility.colored(0, 255, 255, "\nCurrent query list as below,\n"))
@@ -210,7 +211,7 @@ class Switcher(object):
         except ValueError:
             print("\nOnly integer are allowed as input for delete query id")
             print(cowin_utility.colored(0, 255, 0, "\n\nInvalid literal for int() exception caught, Pls retry ..\n\n"))
-   
+        return 'Exiting delete query list..'
 
     #run cowin query
     def number_7(self):
@@ -240,6 +241,7 @@ class Switcher(object):
                     time.sleep(breakTime)
         else:
             print("\nBack to Main Menu!")
+        return 'Exiting run query list..'
 
     #update sleep time
     def number_8(self):
@@ -255,11 +257,11 @@ class Switcher(object):
         except ValueError:
             print("\nOnly integer are allowed as input for sleep time in seconds, min 30sec")
             print(cowin_utility.colored(0, 255, 0, "\n\nInvalid literal for int() exception caught, Pls retry ..\n\n"))
+        return 'Exiting update sleep time..'
 
     #info on gmail less secure apps access
     def number_9(self):
-        print (cowin_utility.colored(0, 0, 255, "\nGo to https://myaccount.google.com/lesssecureapps of your Google Account. You might need to sign in."))
-
+        return print (cowin_utility.colored(0, 0, 255, "\nGo to https://myaccount.google.com/lesssecureapps of your Google Account. You might need to sign in."))
 
 def executeDistPinQuery(i):
     for q_id, q_info in cowin_dict.items():
